@@ -1,0 +1,40 @@
+@import url(http://fonts.googleapis.com/css?family=Alex+Brush);
+@import url(http://fonts.googleapis.com/css?family=Arvo:400,700);
+*{font-size: 18px; font-family: 'Arvo', serif;}
+h1{font-family: 'Alex Brush', cursive; font-size: 75px; font-size: 75px;color : #8d7432;}
+.slide{width:100%;}
+.nav{position: fixed; z-index: 100000;}
+.nav a{margin-left: 25px; color:#68571f; display: block; background: white; float: left; padding:15px; border: 2px solid brown;
+background: #FF9600; color:#FFFFFF; text-shadow: 0.1em 0.1em 0.05em #333;}
+
+#first{text-align: center; background: url("/images/kiss.jpg") 50% 0 no-repeat fixed; height: 960px;}
+
+p{color:#575228;}
+#second{background: white;}
+#first .bg{
+	background: url("/images/heart-bg.png") 50% 0 no-repeat fixed; 
+	position: absolute; width: 100%; height: 960px;}
+.story{z-index: 1500; padding: 50px; padding-top: 105px;}
+#first h1{font-size: 155px; color: #FFD042; margin-top: 50px;}
+.slide h1{margin-top: 20px; margin-bottom: 75px; color: #3F3817; font-size: 100px; font-weight: normal;}
+h2{margin-bottom: 0px;}
+.dropshadow{text-shadow: 0px 0px 10px #000000;}
+p{letter-spacing: 0.01em; word-spacing: 3px; line-height: 2em; margin-top: 25px;}
+.date{font-size: 55px;}
+.canvas{position: relative;}
+.element{position: absolute;}
+.date{color: #FFD042; font-weight: bold;}
+.place{color: #FFD042; font-weight: bold;}
+.gallery{height: 600px;}
+.item {
+  width: 180px;
+  margin-right: 55px;
+  margin-bottom: 55px;
+  float: left;
+}
+.event{margin-bottom: 35px;}
+.hotel{margin-bottom: 35px;}
+.right{float: left;}
+.hide{display: none;}
+.gallery-popup{z-index: 500000; background: #000; position: fixed; top:50px; left:40%;}
+.close{background: #FFFFFF; display: block; padding: 10px;}
