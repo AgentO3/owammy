@@ -1,5 +1,7 @@
 @import url(http://fonts.googleapis.com/css?family=Alex+Brush);
 @import url(http://fonts.googleapis.com/css?family=Arvo:400,700);
+@import url(https://raw.github.com/FortAwesome/Font-Awesome/master/css/font-awesome.css);
+
 *{font-size: 18px; font-family: 'Arvo', serif;}
 h1{font-family: 'Alex Brush', cursive; font-size: 75px; font-size: 75px;color : #8d7432;}
 .slide{width:100%;}
@@ -38,3 +40,4 @@ p{letter-spacing: 0.01em; word-spacing: 3px; line-height: 2em; margin-top: 25px;
 .hide{display: none;}
 .gallery-popup{z-index: 500000; background: #000; position: fixed; top:50px; left:40%;}
 .close{background: #FFFFFF; display: block; padding: 10px;}
+.icon-thumbs-up{font-size: 50px;}
