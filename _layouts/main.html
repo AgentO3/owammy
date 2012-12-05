@@ -7,11 +7,6 @@
 
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>	
 	<script type="text/javascript" src="/js/mustache.js"></script>
-	<script src="http://johnpolacek.github.com/scrolldeck.js/js/jquery.scrollTo-1.4.3.1.min.js"></script>
-	<script src="http://johnpolacek.github.com/scrolldeck.js/decks/parallax/scripts/jquery.parallax-1.1.js"></script>
-	<script src="http://johnpolacek.github.com/scrolldeck.js/js/jquery.easing.1.3.js"></script>
-	<script src="http://johnpolacek.github.com/scrolldeck.js/js/jquery.scrollorama.js"></script>
-	<script src="http://johnpolacek.github.com/scrolldeck.js/js/jquery.scrolldeck.js"></script>
 
 </head>
 <body>
@@ -132,44 +127,26 @@
 	<div id="fifth" class="slide">
 		<div class="story">
 			<h1>Photos</h1>
-			<div class="gallery">
+			<div class="gallery-nav">
+				<span id="next" class="forward right">Next</span>
+				<span id="back" class="back">Back</span>
+			</div>
+			<div class="gallery" data-start="0">
 				
 			</div>
-
+			<div class="clear"></div>
+			<div class="gallery-nav">
+				<span id="back" class="back">Back</span>
+				<span id="next" class="forward right">Next</span>
+			</div>
 		</div>
-		<script id="photo-data" type="application/json">
-			{"photos": 
-				[
-						{"image":"photos/0001_Tammy&Owen.jpg"},
-						{"image":"photos/0002_Tammy&Owen.jpg"},
-						{"image":"photos/0003_Tammy&Owen.jpg"},
-						{"image":"photos/0004_Tammy&Owen.jpg"},
-						{"image":"photos/0005_Tammy&Owen.jpg"},
-						{"image":"photos/0006_Tammy&Owen.jpg"},
-						{"image":"photos/0007_Tammy&Owen.jpg"},
-						{"image":"photos/0008_Tammy&Owen.jpg"},
-						{"image":"photos/0009_Tammy&Owen.jpg"},
-						{"image":"photos/0010_Tammy&Owen.jpg"},
-						{"image":"photos/0011_Tammy&Owen.jpg"},
-						{"image":"photos/0012_Tammy&Owen.jpg"},
-						{"image":"photos/0013_Tammy&Owen.jpg"},
-						{"image":"photos/0014_Tammy&Owen.jpg"},
-						{"image":"photos/0015_Tammy&Owen.jpg"},
-						{"image":"photos/0016_Tammy&Owen.jpg"},
-						{"image":"photos/0017_Tammy&Owen.jpg"},
-						{"image":"photos/0018_Tammy&Owen.jpg"},
-						{"image":"photos/0019_Tammy&Owen.jpg"},
-						{"image":"photos/0020_Tammy&Owen.jpg"},
-						{"image":"photos/0021_Tammy&Owen.jpg"}					
-				]
-			}
-		</script>
+		
 		<div style="clear:both;"></div>
 	</div>
 	<div id="sixth" class="slide">
 		<div class="story">
 			<h1>Gift Registry</h1>
-			<div class="right">
+			<div>
 				<h2>We will be registering at Target and Bed Bath & Beyond</h2>
 			</div>
 		</div>
@@ -196,35 +173,30 @@
 	</div>
 	</div>
 	<div class="gallery-popup hide">
-		<div id="close" class="close">X</div>
-		<img id="img-large" src=""/>
+		<div id="close" class="close right">X</div>
+		
+			<img id="img-large" src="" width="45%;"/>
 	</div>
+
+
 	<script type="text/javascript">
 		$(document).ready(function(){
 
-			$('#first').parallax("50%", 0, 0.1, false);
-			$('.bg').parallax("50%", 750, 0.2, false);
+			// $('#first').parallax("50%", 0, 0.1, false);
+			// $('.bg').parallax("50%", 750, 0.2, false);
 			
-			var deck = new $.scrolldeck({
-				slides: '.slide',
-				buttons: '.nav a',
-				easing: 'easeInOutExpo'
-			});
+			// var deck = new $.scrolldeck({
+			// 	slides: '.slide',
+			// 	buttons: '.nav a',
+			// 	easing: 'easeInOutExpo'
+			// })
 
-			var data = JSON.parse($('#photo-data').html());
+			
+			
+			
 
-			console.log(data);
 
-			var gallery = $('.gallery');
-			for(var i = 0; 10 > i; i++){
-				$(gallery).append('<div class="item"><img src="' +  data.photos[i].image +'"/>');
-			}
-
-			function loadPhotoSet(index, offset){
-
-			}
-
-			$('.item').click(function(){
+			$(document).on('click', '.item', function(){
 				var image = $(this).find('img').attr('src');
 				$('.gallery-popup').show();
 				$('#img-large').attr('src', image).attr('width', 450);
@@ -234,7 +206,139 @@
 				$('.gallery-popup').hide();
 			});
 
+			$('.back').click(function(){
+				$(document).trigger('onGalleryChange', ['back']);
+			});
+
+			$('.forward').click(function(){
+				$(document).trigger('onGalleryChange', ['next']);
+			});
+
+
+			$(document).bind('onGalleryChange',function(e, direction){
+				var gallery = $('.gallery');
+				var start = $(gallery).data('start');
+
+				if(start == 0){
+					$('.back').hide();
+				}else{
+					$('.back').show();
+				}
+
+				var data = JSON.parse($('#photo-data').html());
+				var show = 10;
+
+				if(direction == "back"){
+					start = start - show;
+				}else{
+					start = start + show;
+				}
+
+				//console.log(start - show);
+
+
+				$(gallery).html("");
+				for(var i = start; (start + show) > i; i++){
+					$(gallery).append('<div class="item"><img src="' +  data.photos[i].image +'"/></div>');
+				}
+
+				$(gallery).data('start', (start));
+			});
+
+
+			$(document).trigger('onGalleryChange');
+
 		});
 	</script>
+	<script id="photo-data" type="application/json">
+			{"photos": 
+				[
+						{"image":"photos/0001_Tammy&Owen.jpg"},
+						{"image":"photos/0002_Tammy&Owen.jpg"},
+						{"image":"photos/0003_Tammy&Owen.jpg"},
+						{"image":"photos/0004_Tammy&Owen.jpg"},
+						{"image":"photos/0005_Tammy&Owen.jpg"},
+						{"image":"photos/0006_Tammy&Owen.jpg"},
+						{"image":"photos/0007_Tammy&Owen.jpg"},
+						{"image":"photos/0008_Tammy&Owen.jpg"},
+						{"image":"photos/0009_Tammy&Owen.jpg"},
+						{"image":"photos/0010_Tammy&Owen.jpg"},
+						{"image":"photos/0011_Tammy&Owen.jpg"},
+						{"image":"photos/0012_Tammy&Owen.jpg"},
+						{"image":"photos/0013_Tammy&Owen.jpg"},
+						{"image":"photos/0014_Tammy&Owen.jpg"},
+						{"image":"photos/0015_Tammy&Owen.jpg"},
+						{"image":"photos/0016_Tammy&Owen.jpg"},
+						{"image":"photos/0017_Tammy&Owen.jpg"},
+						{"image":"photos/0018_Tammy&Owen.jpg"},
+						{"image":"photos/0019_Tammy&Owen.jpg"},
+						{"image":"photos/0020_Tammy&Owen.jpg"},
+						{"image":"photos/0021_Tammy&Owen.jpg"},
+						{"image":"photos/0023_Tammy&Owen.jpg"},
+						{"image":"photos/0024_Tammy&Owen.jpg"},
+						{"image":"photos/0025_Tammy&Owen.jpg"},
+						{"image":"photos/0026_Tammy&Owen.jpg"},
+						{"image":"photos/0027_Tammy&Owen.jpg"},
+						{"image":"photos/0028_Tammy&Owen.jpg"},
+						{"image":"photos/0029_Tammy&Owen.jpg"},
+						{"image":"photos/0030_Tammy&Owen.jpg"},
+						{"image":"photos/0031_Tammy&Owen.jpg"},
+						{"image":"photos/0032_Tammy&Owen.jpg"},
+						{"image":"photos/0033_Tammy&Owen.jpg"},
+						{"image":"photos/0034_Tammy&Owen.jpg"},
+						{"image":"photos/0035_Tammy&Owen.jpg"},
+						{"image":"photos/0036_Tammy&Owen.jpg"},
+						{"image":"photos/0037_Tammy&Owen.jpg"},
+						{"image":"photos/0038_Tammy&Owen.jpg"},
+						{"image":"photos/0039_Tammy&Owen.jpg"},
+						{"image":"photos/0040_Tammy&Owen.jpg"},
+						{"image":"photos/0041_Tammy&Owen.jpg"},
+						{"image":"photos/0042_Tammy&Owen.jpg"},
+						{"image":"photos/0043_Tammy&Owen.jpg"},
+						{"image":"photos/0044_Tammy&Owen.jpg"},
+						{"image":"photos/0045_Tammy&Owen.jpg"},
+						{"image":"photos/0046_Tammy&Owen.jpg"},
+						{"image":"photos/0047_Tammy&Owen.jpg"},
+						{"image":"photos/0048_Tammy&Owen.jpg"},
+						{"image":"photos/0049_Tammy&Owen.jpg"},
+						{"image":"photos/0050_Tammy&Owen.jpg"},
+						{"image":"photos/0051_Tammy&Owen.jpg"},
+						{"image":"photos/0052_Tammy&Owen.jpg"},
+						{"image":"photos/0053_Tammy&Owen.jpg"},
+						{"image":"photos/0054_Tammy&Owen.jpg"},
+						{"image":"photos/0055_Tammy&Owen.jpg"},
+						{"image":"photos/0056_Tammy&Owen.jpg"},
+						{"image":"photos/0057_Tammy&Owen.jpg"},
+						{"image":"photos/0058_Tammy&Owen.jpg"},
+						{"image":"photos/0059_Tammy&Owen.jpg"},
+						{"image":"photos/0060_Tammy&Owen.jpg"},
+						{"image":"photos/0061_Tammy&Owen.jpg"},
+						{"image":"photos/0062_Tammy&Owen.jpg"},
+						{"image":"photos/0063_Tammy&Owen.jpg"},
+						{"image":"photos/0064_Tammy&Owen.jpg"},
+						{"image":"photos/0065_Tammy&Owen.jpg"},
+						{"image":"photos/0066_Tammy&Owen.jpg"},
+						{"image":"photos/0067_Tammy&Owen.jpg"},
+						{"image":"photos/0068_Tammy&Owen.jpg"},
+						{"image":"photos/0069_Tammy&Owen.jpg"},
+						{"image":"photos/0070_Tammy&Owen.jpg"},
+						{"image":"photos/0071_Tammy&Owen.jpg"},
+						{"image":"photos/0072_Tammy&Owen.jpg"},
+						{"image":"photos/0073_Tammy&Owen.jpg"},
+						{"image":"photos/0074_Tammy&Owen.jpg"},
+						{"image":"photos/0075_Tammy&Owen.jpg"},
+						{"image":"photos/0076_Tammy&Owen.jpg"},
+						{"image":"photos/0077_Tammy&Owen.jpg"},
+						{"image":"photos/0078_Tammy&Owen.jpg"},
+						{"image":"photos/0079_Tammy&Owen.jpg"},
+						{"image":"photos/0080_Tammy&Owen.jpg"},
+						{"image":"photos/0081_Tammy&Owen.jpg"},
+						{"image":"photos/0082_Tammy&Owen.jpg"},
+						{"image":"photos/0083_Tammy&Owen.jpg"},
+						{"image":"photos/0084_Tammy&Owen.jpg"},
+						{"image":"photos/0085_Tammy&Owen.jpg"}						
+				]
+			}
+		</script>
 </body>
 </html>
