@@ -128,16 +128,16 @@
 		<div class="story">
 			<h1>Photos</h1>
 			<div class="gallery-nav">
-				<span id="next" class="forward right">Next</span>
-				<span id="back" class="back">Back</span>
+				<span id="next" class="forward right button">Next</span>
+				<span id="back" class="back button">Back</span>
 			</div>
 			<div class="gallery" data-start="0">
 				
 			</div>
 			<div class="clear"></div>
 			<div class="gallery-nav">
-				<span id="back" class="back">Back</span>
-				<span id="next" class="forward right">Next</span>
+				<span id="back" class="back button">Back</span>
+				<span id="next" class="forward right button">Next</span>
 			</div>
 		</div>
 		
@@ -182,20 +182,6 @@
 	<script type="text/javascript">
 		$(document).ready(function(){
 
-			// $('#first').parallax("50%", 0, 0.1, false);
-			// $('.bg').parallax("50%", 750, 0.2, false);
-			
-			// var deck = new $.scrolldeck({
-			// 	slides: '.slide',
-			// 	buttons: '.nav a',
-			// 	easing: 'easeInOutExpo'
-			// })
-
-			
-			
-			
-
-
 			$(document).on('click', '.item', function(){
 				var image = $(this).find('img').attr('src');
 				$('.gallery-popup').show();
@@ -233,8 +219,6 @@
 				}else{
 					start = start + show;
 				}
-
-				//console.log(start - show);
 
 
 				$(gallery).html("");
